@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h1>To-do list</h1>
+        <div>
+        <label>Title:</label><br>
+        <input type="text" id="title" name="title" value={{todo.title}} required><br><br>
+        </div>
+        <div>
+        <label>Description:</label><br>
+        <textarea id="description" name="description" rows="5" cols="30" required>{{todo.description}}</textarea><br><br>
+        </div>
+        <div>
+        <label>Work Status:</label><br>
+        <input type="checkbox" id="completed" name="completed" {% if todo.completed %}checked{% endif %}>Completed
+        </div><br><br>
+        <div>
+        <input type="submit" value="Update">
+        </div>
+    </form>
+</body>
+</html>

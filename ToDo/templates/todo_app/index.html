@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h1>To-do list</h1>
+        <div>
+        <label>Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+        </div>
+        <div>
+        <label>Description:</label><br>
+        <textarea id="description" name="description" rows="5" cols="30" required></textarea><br><br>
+        </div>
+        <div>
+        <input type="submit" value="Add">
+        </div>
+    </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Work Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos%}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.description}}</td>
+                    <td>
+                        <form action="{% url 'complete_todo' todo.id %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">
+                                {% if todo.completed %}
+                                    Completed
+                                {% else %}
+                                    Incomplete
+                                {% endif %}
+                            </button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form action="{% url 'update_todo' todo.id%}" method="GET" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'delete_todo' todo.id %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
+</html>
